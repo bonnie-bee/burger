@@ -1,0 +1,83 @@
+<h1>BURGER</h1>
+<h2> OF THE DAY</h2>
+
+
+<h2>Available burgers:</h2>
+
+{{!-- creates an unordered list based off the data grabbed in the all function of burgers_controller --}}
+<ul>
+    {{!-- runs through each burger in the table --}}
+    {{#each burgers}} 
+        {{!-- posts the ones that haven't been eaten yet --}}
+        {{#unless devoured}}
+            <li>
+                {{!-- prints the name and makes a button so you can eat the burger --}} 
+                {{name}}
+                <button class="eatBurger" data-id="{{id}}" data-eaten="{{devoured}}">
+                    EAT ME
+                </button>
+            </li>
+        {{/unless}} 
+    {{/each}}
+</ul>>
+
+
+<h2>Burgers we ran out of:</h2>
+{{!-- same as previous list but with burgers that have been eaten and no button--}}
+<ul>
+    {{#each burgers}} 
+        {{#if devoured}}
+            <li>
+                {{name}}
+            </li>
+        {{/if}}
+    {{/each}}
+</ul>
+
+<h2>Make you're own burger</h2>
+<form>
+    <label for="burgerName">Burger Name:</label>
+    <input type="text" id="burgerName" name="name">
+    <button type="submit" id="makeBtn">Make burger</button>
+</form>
+
+<script type="text/javascript">
+
+$(".eatBurger").on('click', function(event){
+    const id = $(this).data("id");
+    const eaten = $(this).data("eaten");
+    const isEaten = {
+        devoured: eaten
+    };
+
+    $.ajax(`.api/cats/${id}`, {
+        type: "PUT",
+        data: isEaten
+    }).then(
+        function() {
+            console.log("I ATE A BURGER");
+            location.reload()
+        };
+    );
+});
+
+$("#makeBtn").on('click', function(event){
+    event.preventDefault;
+
+    let newBurger = {
+        name: $("#burgerName").val().trim();
+        devoured: false;
+    };
+
+    $.ajax('/api/burgers', {
+        type: "POST",
+        data: newBurger;
+    }).then(
+        function(){
+            console.log("I'M A NEW BURGER");
+            location.reload();
+        };
+    );
+});
+
+</script>
