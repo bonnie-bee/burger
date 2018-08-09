@@ -8,11 +8,11 @@ router.get('/', function(req, res){
     console.log("main page - all burgers")
     //grabs the info from the all function in burger.js and sends it to be rendered in the handelbars file
     burger.all(function(data){
-        console.log(data);
+        // console.log(data);
         const hbsObject = {
             burgers: data
         }
-        console.log(`hbsObject: ${hbsObject}`);
+        // console.log(`hbsObject: ${hbsObject}`);
         res.render('index', hbsObject);
     });
 });
@@ -27,19 +27,20 @@ router.post("/api/burgers", function(req, res){
         //grabs the info sent in the ajax call of the burger.js file when the create burger button is hit and puts it in as value parameter for the create function
         req.body.name, req.body.devoured
     ], function(result){
-        console.log(result);
+        // console.log(result);
         //takes the result of the http request and renders it in json to be displayed on the api page
         res.json({id: result.insertId});
     });
 });
 
 router.put("/api/burgers/:id", function(req, res){
+    // console.log("req id", req.params.id)
     console.log('updated a burger!');
     const condition = `id = ${req.params.id}`;
-    console.log("condition: ", condition)
+    // console.log("condition: ", condition)
 
     burger.update({
-        devoured: req.body.devoured
+        devoured: 1,
     }, condition, function(result){
         if (result.changedRows == 0) {
             return res.status(404).end();

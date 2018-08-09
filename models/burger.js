@@ -7,12 +7,12 @@ const burger = {
     all: function(cb){
         orm.selectAll("burgers", function(res){
             cb(res);
-            console.log('model result: ', res)
+            // console.log('model result: ', res)
         });
     },
     //makes a burger
     create: function (cols, vals, cb){
-        console.log("model console cols and vals: ", cols, vals)
+        // console.log("model console cols and vals: ", cols, vals)
         orm.insertOne("burgers", cols, vals, function(res) {
             cb(res);
         });

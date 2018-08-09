@@ -43,16 +43,16 @@ function objToSql(ob){
 const orm  = {
     selectAll: function(tableInput, cb) {
         let queryString = `SELECT * FROM ${tableInput};`;
-        console.log(queryString);
+        // console.log(queryString);
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             cb(result);
         });
     },
     insertOne: function(tableInput, cols, vals, cb) {
-        console.log('orm vals', vals, vals.length)
+        // console.log('orm vals', vals, vals.length)
         let queryString = `INSERT INTO ${tableInput} (${cols.toString()}) VALUES (${printQuestionMarks(vals.length)});`;
-        console.log(queryString);
+        // console.log(queryString);
         //need to send vals so can replace question marks
         connection.query(queryString, vals, function(err, result) {
             if (err) throw err;
@@ -61,7 +61,7 @@ const orm  = {
     },
     updateOne: function(tableInput, colVals, condition, cb){
         let queryString = `UPDATE ${tableInput} SET ${objToSql(colVals)} WHERE ${condition};`;
-        console.log(queryString);
+        // console.log(queryString);
         connection.query(queryString, function(err, result) {
             if (err) throw err;
             cb(result);

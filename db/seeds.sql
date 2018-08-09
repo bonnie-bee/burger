@@ -1,2 +1,2 @@
-INSERT INTO burgers (burger_name, devoured) VALUES ("cheeseburger", true), ("plain and dry", false), 
-("chili cheeseburger", false)
+INSERT INTO burgers (burger_name, devoured) VALUES ("New Bacon-ings", false), ("The Sound & The Curry Burger", false), 
+("If Looks Could Kale Burger", false), ("Baby You Can Chive My Car Burger", false), ("Caper the Friendly Goat Cheese Burger", false)

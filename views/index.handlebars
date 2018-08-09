@@ -13,13 +13,13 @@
             <li>
                 {{!-- prints the name and makes a button so you can eat the burger --}} 
                 {{burger_name}}
-                <button class="eatBurger" data-id="{{id}}" data-eaten={{devoured}}>
+                <button class="burgerBtn" data-id="{{id}}" data-eaten={{devoured}}>
                     EAT ME
                 </button>
             </li>
         {{/unless}} 
     {{/each}}
-</ul>>
+</ul>
 
 
 <h2>Burgers we ran out of:</h2>
@@ -43,16 +43,15 @@
 
 <script>
 
-$(function(){
-console.log("script loaded");
-$(".eatBurger").on('click', function(event){
+//$(function(){
+$(".burgerBtn").on('click', function(event){
     const id = $(this).data("id");
     const eaten = $(this).data("eaten");
     const isEaten = {
         devoured: eaten
     };
     console.log("THIS IS A EAT BUTTON")
-    $.ajax(`.api/burgers/${id}`, {
+    $.ajax(`/api/burgers/${id}`, {
         type: "PUT",
         data: isEaten
     }).then(
@@ -81,6 +80,6 @@ $("#makeBtn").on('click', function(event){
         }
     );
 });
-});
+//});
 
 </script>
