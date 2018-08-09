@@ -1,4 +1,5 @@
 const connection = require("../config/connection");
+console.log("In the orm!");
 
 //takes the user input and turns it into question marks for the query
 //Loops through the amount of values that the user inputs and creates that many question marks to be put into the query and grab the appropriate number of values inputted 
@@ -6,7 +7,7 @@ function printQuestionMarks(num){
     let arr = [];
 
     //will make the array ["?","?","?"]
-    for (let i = 1; i < num; i++){
+    for (let i = 0; i < num; i++){
         arr.push("?")
     }
     
@@ -41,7 +42,7 @@ function objToSql(ob){
 
 const orm  = {
     selectAll: function(tableInput, cb) {
-        let queryString = "SELECT * FROM" + tableInput;
+        let queryString = `SELECT * FROM ${tableInput};`;
         console.log(queryString);
         connection.query(queryString, function(err, result) {
             if (err) throw err;
@@ -49,7 +50,8 @@ const orm  = {
         });
     },
     insertOne: function(tableInput, cols, vals, cb) {
-        let queryString = `INSERT INTO ${tableInput} (${cols.toString()}) VALUES (${printQuestionMarks(vals.length)})`;
+        console.log('orm vals', vals, vals.length)
+        let queryString = `INSERT INTO ${tableInput} (${cols.toString()}) VALUES (${printQuestionMarks(vals.length)});`;
         console.log(queryString);
         //need to send vals so can replace question marks
         connection.query(queryString, vals, function(err, result) {
@@ -58,7 +60,7 @@ const orm  = {
         });
     },
     updateOne: function(tableInput, colVals, condition, cb){
-        let queryString = `UPDATE ${tableInput} SET ${objToSql(colVals)} WHERE ${condition}`;
+        let queryString = `UPDATE ${tableInput} SET ${objToSql(colVals)} WHERE ${condition};`;
         console.log(queryString);
         connection.query(queryString, function(err, result) {
             if (err) throw err;

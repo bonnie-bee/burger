@@ -12,8 +12,8 @@
         {{#unless devoured}}
             <li>
                 {{!-- prints the name and makes a button so you can eat the burger --}} 
-                {{name}}
-                <button class="eatBurger" data-id="{{id}}" data-eaten="{{devoured}}">
+                {{burger_name}}
+                <button class="eatBurger" data-id="{{id}}" data-eaten={{devoured}}>
                     EAT ME
                 </button>
             </li>
@@ -28,7 +28,7 @@
     {{#each burgers}} 
         {{#if devoured}}
             <li>
-                {{name}}
+                {{burger_name}}
             </li>
         {{/if}}
     {{/each}}
@@ -41,23 +41,25 @@
     <button type="submit" id="makeBtn">Make burger</button>
 </form>
 
-<script type="text/javascript">
+<script>
 
+$(function(){
+console.log("script loaded");
 $(".eatBurger").on('click', function(event){
     const id = $(this).data("id");
     const eaten = $(this).data("eaten");
     const isEaten = {
         devoured: eaten
     };
-
-    $.ajax(`.api/cats/${id}`, {
+    console.log("THIS IS A EAT BUTTON")
+    $.ajax(`.api/burgers/${id}`, {
         type: "PUT",
         data: isEaten
     }).then(
         function() {
             console.log("I ATE A BURGER");
             location.reload()
-        };
+        }
     );
 });
 
@@ -65,19 +67,20 @@ $("#makeBtn").on('click', function(event){
     event.preventDefault;
 
     let newBurger = {
-        name: $("#burgerName").val().trim();
-        devoured: false;
+        name: $("#burgerName").val().trim(),
+        devoured: 0,
     };
 
     $.ajax('/api/burgers', {
         type: "POST",
-        data: newBurger;
+        data: newBurger,
     }).then(
         function(){
             console.log("I'M A NEW BURGER");
             location.reload();
-        };
+        }
     );
+});
 });
 
 </script>
